@@ -5,6 +5,7 @@ import veterinarioRoutes from "./routes/veterinarioRoutes.js";
 
 const app = express();
 
+//Habilitando la lectura del body request
 app.use(express.json());
 
 dotenv.config();
