@@ -3,7 +3,7 @@ import { registrar, perfil } from "../controllers/veterinarioController.js";
 
 const routes = express.Router();
 
-routes.get("/", registrar)
+routes.post("/", registrar)
 
 routes.get("/perfil", perfil)
 

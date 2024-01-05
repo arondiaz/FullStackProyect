@@ -1,9 +1,9 @@
 const registrar = (req, res) => {
-  res.send("desde api/veterinarios Inicio");
+  res.json({msg: "registrando usuario"});
 };
 
 const perfil = (req, res) => {
-    res.send("desde api/veterinarios/perfil PERFIL");
+    res.json({url: "api/veterinarios/perfil"});
   };
   
 
