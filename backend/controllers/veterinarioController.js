@@ -1,5 +1,10 @@
 const registrar = (req, res) => {
-  res.send("desde api/veterinarioss");
+  res.send("desde api/veterinarios Inicio");
 };
 
-export { registrar };
+const perfil = (req, res) => {
+    res.send("desde api/veterinarios/perfil PERFIL");
+  };
+  
+
+export { registrar, perfil };
