@@ -1,9 +1,8 @@
 import express from "express";
+import { registrar } from "../controllers/veterinarioController.js";
 
 const routes = express.Router();
 
-routes.get("/", (req, res) => {
-  res.send("desde api/veterinarios");
-});
+routes.get("/", registrar)
 
 export default routes;
