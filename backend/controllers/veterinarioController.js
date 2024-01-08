@@ -41,4 +41,16 @@ const confirmar = async (req, res) => {
   }
 };
 
-export { registrar, perfil, confirmar };
+const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  //Comprobar si el mail existe en la base da datos
+  const existeEmail = await Veterinario.findOne({ email });
+  if (!existeEmail) {
+    const error = new Error("El mail no existe");
+    return res.status(401).json({ msg: error.message });
+  }
+
+};
+
+export { registrar, perfil, confirmar, login };
