@@ -56,6 +56,14 @@ const login = async (req, res) => {
     const error = new Error("El usuario no fue confirmado");
     return res.status(403).json({ msg: error.message });
   }
+
+  //Validar password ingresada con la de la base de datos
+  if (await usuario.validatePassword(password)) {
+    console.log("Password correcto");
+  } else {
+    const error = new Error("El password es incorrecto");
+    return res.status(401).json({ msg: error.message });
+  }
 };
 
 export { registrar, perfil, confirmar, login };
