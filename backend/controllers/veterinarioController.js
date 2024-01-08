@@ -1,4 +1,3 @@
-import { json } from "express";
 import Veterinario from "../models/Veterinario.js";
 
 const registrar = async (req, res) => {
