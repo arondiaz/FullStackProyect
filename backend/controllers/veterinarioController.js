@@ -23,4 +23,9 @@ const perfil = (req, res) => {
   res.json({ url: "api/veterinarios/perfil" });
 };
 
-export { registrar, perfil };
+const confirmar = (req, res) => {
+  console.log(req.params.token);
+  res.json({ url: "confirmar" });
+};
+
+export { registrar, perfil, confirmar };
