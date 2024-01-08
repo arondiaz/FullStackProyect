@@ -4,10 +4,10 @@ const registrar = async (req, res) => {
   const { nombre, email, contraseña } = req.body;
 
   //Comprobar que el usuario ya está registrado
-  const existeUsuario = Veterinario.findOne({ email });
+  const existeUsuario = await Veterinario.findOne({ email });
   if (existeUsuario) {
     const error = new Error("El usuario ya está registrado");
-    return res.status(400).json({msg: error.message});
+    return res.status(400).json({ msg: error.message });
   }
 
   try {
