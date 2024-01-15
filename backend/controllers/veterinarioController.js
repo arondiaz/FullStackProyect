@@ -88,8 +88,17 @@ const olvidePassword = async (req, res) => {
   }
 };
 
-const comprobarToken = (req, res) => {
-  res.json("olvide pass");
+const comprobarToken = async (req, res) => {
+  const { token } = req.params;
+
+  const buscarToken = await Veterinario.findOne({ token });
+  console.log(buscarToken);
+  if (buscarToken) {
+    return res.json({ msg: "Token valido" });
+  }
+
+  const error = new Error("Token inválido");
+  return res.status(404).json({ msg: error.message });
 };
 
 const nuevoPassword = (req, res) => {
