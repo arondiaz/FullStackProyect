@@ -37,9 +37,26 @@ const obtenerPaciente = async (req, res) => {
 const actualizarPaciente = async (req, res) => {
   const {id} = req.params;
 
-  console.log(id);
+  const paciente = await Paciente.findById(id);
 
-  res.json("bien")
+  if(req.veterinario._id.toString() !== paciente.veterinario._id.toString()){
+    return res.status(401).json("Acción no válida");
+  };
+
+  paciente.nombre = req.body.nombre || paciente.nombre;
+  paciente.email = req.body.email || paciente.email;
+  paciente.sintomas = req.body.sintomas || paciente.sintomas;
+  paciente.propietario = req.body.propietario || paciente.propietario;
+  paciente.fecha = req.body.fecha || paciente.fecha;
+
+  try {
+    const pacienteActualizado = await paciente.save();
+    res.json(pacienteActualizado);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({msg: "Error al actualizar"})
+  }
+  
 }
 
 const eliminarPaciente = async (req, res) => {
