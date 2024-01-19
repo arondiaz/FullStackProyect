@@ -7,7 +7,7 @@ const Login = () => {
         <h1 className="text-indigo-600 font-black text-6xl">Inicia Sesión</h1>
       </div>
 
-      <div>
+      <div className="mt-20 md:mt-5">
         <form>
           <div className="my-5">
             <label className="uppercase text-gray-600 block text-xl font-bold">
