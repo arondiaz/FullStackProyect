@@ -1,6 +1,39 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import Alerta from "../components/Alerta";
 
 const Registrar = () => {
+  const [email, setEmail] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [password, setPassword] = useState("");
+  const [repetirPassword, setRepetirPassword] = useState("");
+  const [alerta, setALerta] = useState({});
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if ([email, nombre, password].includes("")) {
+      return setALerta({ msg: "Campos vacíos", error: true });
+    }
+
+    if (password !== repetirPassword) {
+      return setALerta({ msg: "Las contraseñas no coinciden", error: true });
+    }
+
+    if (password.length <= 5) {
+      return setALerta({
+        msg: "La contraseña debe tener más de 5 caracteres",
+        error: true,
+      });
+    }
+
+    console.log("paso las validaciones");
+
+    setALerta({});
+  }
+
+  const { msg } = alerta;
+
   return (
     <>
       <div>
@@ -8,12 +41,16 @@ const Registrar = () => {
       </div>
 
       <div className="mt-20 md:mt-5">
-        <form>
+        {msg && <Alerta alerta={alerta} />}
+
+        <form onSubmit={handleSubmit}>
           <div className="my-5">
             <label className="uppercase text-gray-600 block text-xl font-bold">
               Nombre
             </label>
             <input
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
               type="text"
               placeholder="Ingresa tu nombre"
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
@@ -25,6 +62,8 @@ const Registrar = () => {
               Email
             </label>
             <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               type="text"
               placeholder="Ingresa tu email"
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
@@ -36,6 +75,8 @@ const Registrar = () => {
               Password
             </label>
             <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               type="password"
               placeholder="Ingresa tu password"
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
@@ -47,6 +88,8 @@ const Registrar = () => {
               Comprobar Password
             </label>
             <input
+              value={repetirPassword}
+              onChange={(e) => setRepetirPassword(e.target.value)}
               type="password"
               placeholder="Repite tu password"
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
