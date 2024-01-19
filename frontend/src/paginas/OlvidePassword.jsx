@@ -1,7 +1,55 @@
+import { Link } from "react-router-dom";
+
 const OlvidePassword = () => {
   return (
     <>
-      <h2>Olvide Password</h2>
+      <div>
+        <h1 className="text-indigo-600 font-black text-6xl">
+          Recuperar Contraseña
+        </h1>
+      </div>
+
+      <div className="mt-20 md:mt-5">
+        <form>
+          <div className="my-5">
+            <label className="uppercase text-gray-600 block text-xl font-bold">
+              Email
+            </label>
+            <input
+              type="text"
+              placeholder="Ingresa tu email"
+              className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
+            />
+          </div>
+
+          <nav className="mt-10 lg:flex lg:justify-between">
+            <p className="text-lg block text-center my-5 text-gray-500">
+              No tienes cuenta?{" "}
+              <Link to="/registrar">
+                <span className="font-bold cursor-pointer hover:text-indigo-800 ">
+                  Regístrate
+                </span>
+              </Link>
+            </p>
+
+            <p className="text-lg block text-center my-5 text-gray-500">
+              Tienes cuenta?{" "}
+              <Link to="/">
+                <span className="font-bold cursor-pointer hover:text-indigo-800 ">
+                  Inicia Sesión
+                </span>
+              </Link>
+            </p>
+          </nav>
+
+          <input
+            type="submit"
+            value="Siguiente"
+            className="bg-indigo-700 py-2 px-6 rounded-xl w-full text-white font-bold mt-5 cursor-pointer hover:bg-indigo-800
+            md:w-auto"
+          />
+        </form>
+      </div>
     </>
   );
 };
