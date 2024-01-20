@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Alerta from "../components/Alerta";
+import axios from "axios"
 
 const Registrar = () => {
   const [email, setEmail] = useState("");
@@ -9,7 +10,7 @@ const Registrar = () => {
   const [repetirPassword, setRepetirPassword] = useState("");
   const [alerta, setALerta] = useState({});
 
-  function handleSubmit(e) {
+  async function handleSubmit (e) {
     e.preventDefault();
 
     if ([email, nombre, password].includes("")) {
@@ -30,6 +31,23 @@ const Registrar = () => {
     console.log("paso las validaciones");
 
     setALerta({});
+
+    try {
+      const url = "http://localhost:4000/api/veterinarios/"
+      await axios.post(url, {nombre, email, password})
+
+      setALerta({
+        msg: "Cuenta creada correctamete, abre tu email",
+        error: false
+      })
+
+    } catch (error) {
+      setALerta({
+        msg: error.response.data.msg,
+        error: true
+      })
+
+    }
   }
 
   const { msg } = alerta;
