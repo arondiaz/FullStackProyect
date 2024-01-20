@@ -1,6 +1,7 @@
 import Veterinario from "../models/Veterinario.js";
 import generarJWT from "../helpers/generarJWT.js";
 import generarId from "../helpers/generarId.js";
+import emailRegistro from "../helpers/emailRegistro.js";
 
 const registrar = async (req, res) => {
   const { nombre, email, contraseña } = req.body;
@@ -15,6 +16,10 @@ const registrar = async (req, res) => {
   try {
     const veterinario = new Veterinario(req.body);
     const nuevoVeterinario = await veterinario.save();
+
+    //Envio de email
+    emailRegistro({email, nombre, token: veterinario.token})
+
     res.json(nuevoVeterinario);
   } catch (error) {
     console.log(error);
