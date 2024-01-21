@@ -14,7 +14,8 @@ const ConfirmarCuenta = () => {
   useEffect(() => {
     const confirmarCuenta = async () => {
       try {
-        const url = `http://localhost:4000/api/veterinarios/confirmar/${id}`;
+        const url = `${
+          import.meta.env.VITE_BACKEND_URL}/api/veterinarios/confirmar/${id}`;
         const { data } = await axios.get(url);
         setCuentaConfirmada(true);
         setAlerta({
@@ -27,7 +28,7 @@ const ConfirmarCuenta = () => {
       setCargando(false);
     };
 
-   return () =>  confirmarCuenta();
+    return () => confirmarCuenta();
   }, []);
 
   return (
@@ -42,10 +43,7 @@ const ConfirmarCuenta = () => {
         {!cargando && <Alerta alerta={alerta} />}
 
         {cuentaConfirmada && (
-          <Link
-            to="/"
-            className="text-lg block text-center my-5 text-gray-500"
-          >
+          <Link to="/" className="text-lg block text-center my-5 text-gray-500">
             Iniciar Sesión{" "}
           </Link>
         )}

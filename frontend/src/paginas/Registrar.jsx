@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Alerta from "../components/Alerta";
-import axios from "axios"
+import axios from "axios";
 
 const Registrar = () => {
   const [email, setEmail] = useState("");
@@ -10,7 +10,7 @@ const Registrar = () => {
   const [repetirPassword, setRepetirPassword] = useState("");
   const [alerta, setALerta] = useState({});
 
-  async function handleSubmit (e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     if ([email, nombre, password].includes("")) {
@@ -33,20 +33,18 @@ const Registrar = () => {
     setALerta({});
 
     try {
-      const url = "http://localhost:4000/api/veterinarios/"
-      await axios.post(url, {nombre, email, password})
+      const url = `${import.meta.env.VITE_BACKEND_URL}/api/veterinarios/`;
+      await axios.post(url, { nombre, email, password });
 
       setALerta({
         msg: "Cuenta creada correctamete, abre tu email",
-        error: false
-      })
-
+        error: false,
+      });
     } catch (error) {
       setALerta({
         msg: error.response.data.msg,
-        error: true
-      })
-
+        error: true,
+      });
     }
   }
 
