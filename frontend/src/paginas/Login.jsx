@@ -1,6 +1,35 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import Alerta from "../components/Alerta";
+import axios from "axios";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [alerta, setAlerta] = useState({});
+  const [mostrarAlerta, setMostrarAlerta] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if ([email, password].includes("")) {
+      setMostrarAlerta(true);
+      return setAlerta({ msg: "Campos obligatorios", error: true });
+    }
+
+    try {
+      const url = `http://localhost:4000/api/veterinarios/login`;
+      const { data } = await axios.post(url, { email, password });
+
+      localStorage.setItem("token", data.token);
+    } catch (error) {
+      setMostrarAlerta(true);
+      return setAlerta({ msg: error.response.data.msg, error: true });
+    }
+
+    setMostrarAlerta(false);
+  };
+
   return (
     <>
       <div>
@@ -8,12 +37,15 @@ const Login = () => {
       </div>
 
       <div className="mt-20 md:mt-5">
-        <form>
+        {mostrarAlerta && <Alerta alerta={alerta} />}
+        <form onSubmit={handleSubmit}>
           <div className="my-5">
             <label className="uppercase text-gray-600 block text-xl font-bold">
               Email
             </label>
             <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               type="text"
               placeholder="Ingresa tu email"
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
@@ -25,6 +57,8 @@ const Login = () => {
               Password
             </label>
             <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               type="password"
               placeholder="Ingresa tu password"
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
