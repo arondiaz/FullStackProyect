@@ -7,6 +7,8 @@ import OlvidePassword from "./paginas/OlvidePassword";
 import ConfirmarCuenta from "./paginas/ConfirmarCuenta";
 import NuevoPassword from "./paginas/NuevoPassword";
 import { AuthProvider } from "../Context/AuthProvider";
+import RutaProtegida from "./layout/RutaProtegida";
+import AdministrarPacientes from "./paginas/AdministrarPacientes";
 
 function App() {
   return (
@@ -14,6 +16,7 @@ function App() {
       <BrowserRouter>
         <AuthProvider>
           <Routes>
+            
             <Route path="/" element={<AuthLayout />}>
               <Route index element={<Login />} />
               <Route path="registrar" element={<Registrar />} />
@@ -21,6 +24,11 @@ function App() {
               <Route path="olvidepassword/:token" element={<NuevoPassword />} />
               <Route path="confirmar/:id" element={<ConfirmarCuenta />} />
             </Route>
+
+            <Route path="/admin" element={<RutaProtegida />}>
+              <Route index element={<AdministrarPacientes />} />
+            </Route>
+
           </Routes>
         </AuthProvider>
       </BrowserRouter>

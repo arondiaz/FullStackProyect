@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Alerta from "../components/Alerta";
 import axios from "axios";
@@ -8,6 +8,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [alerta, setAlerta] = useState({});
   const [mostrarAlerta, setMostrarAlerta] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +24,8 @@ const Login = () => {
       const { data } = await axios.post(url, { email, password });
 
       localStorage.setItem("token", data.token);
+
+      navigate("/admin");
     } catch (error) {
       setMostrarAlerta(true);
       return setAlerta({ msg: error.response.data.msg, error: true });
