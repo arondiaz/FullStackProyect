@@ -4,13 +4,17 @@ import axios from "axios";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+  const [cargando, setCargando] = useState(true)
   const [auth, setAuth] = useState({});
 
   useEffect(() => {
     const autenticarUsuario = async () => {
       const token = localStorage.getItem("token");
 
-      if (!token) return;
+      if (!token) {
+        setCargando(false)
+        return
+      }
 
       const config = {
         headers: {
@@ -27,7 +31,11 @@ const AuthProvider = ({ children }) => {
         console.log(error.response.data.msg);
         setAuth({});
       }
+
+      setCargando(false)
+   
     };
+
 
     return () => autenticarUsuario();
   }, []);
@@ -37,6 +45,7 @@ const AuthProvider = ({ children }) => {
       value={{
         auth,
         setAuth,
+        cargando
       }}
     >
       {children}

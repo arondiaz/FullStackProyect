@@ -1,11 +1,18 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const RutaProtegida = () => {
+  const { auth, cargando } = useAuth();
+
+  console.log(auth);
+  console.log(cargando);
+  if (cargando) return "cargando";
+  
   return (
     <>
       <h1>Esta es un ruta protegida</h1>
 
-      <Outlet />
+      {auth?._id ? <Outlet /> : <Navigate to="/" />}
     </>
   );
 };
