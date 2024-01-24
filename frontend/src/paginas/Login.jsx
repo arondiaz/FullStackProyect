@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Alerta from "../components/Alerta";
 import axios from "axios";
+import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -9,6 +10,7 @@ const Login = () => {
   const [alerta, setAlerta] = useState({});
   const [mostrarAlerta, setMostrarAlerta] = useState(false);
 
+  const { setAuth } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -25,6 +27,7 @@ const Login = () => {
 
       localStorage.setItem("token", data.token);
 
+      setAuth(data);
       navigate("/admin");
     } catch (error) {
       setMostrarAlerta(true);

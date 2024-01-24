@@ -19,7 +19,7 @@ const registrar = async (req, res) => {
     const nuevoVeterinario = await veterinario.save();
 
     //Envio de email
-    emailRegistro({email, nombre, token: veterinario.token})
+    emailRegistro({ email, nombre, token: veterinario.token });
 
     res.json(nuevoVeterinario);
   } catch (error) {
@@ -69,7 +69,12 @@ const login = async (req, res) => {
 
   //Validar password ingresada con la de la base de datos
   if (await usuario.validatePassword(password)) {
-    res.json({ token: generarJWT(usuario.id) });
+    res.json({
+      _id: usuario._id,
+      nombre: usuario.nombre,
+      email: usuario.email,
+      token: generarJWT(usuario.id),
+    });
   } else {
     const error = new Error("El password es incorrecto");
     return res.status(401).json({ msg: error.message });
@@ -93,8 +98,8 @@ const olvidePassword = async (req, res) => {
     emailOlvidePassword({
       email,
       nombre: existeVeterinario.nombre,
-      token: existeVeterinario.token
-    })
+      token: existeVeterinario.token,
+    });
 
     res.json({ msg: "Email enviado" });
   } catch (error) {
