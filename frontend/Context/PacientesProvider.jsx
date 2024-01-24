@@ -5,10 +5,33 @@ const PacientesContext = createContext();
 
 const PacientesProvider = ({children}) => {
 
+    const [pacientes, setPacientes] = useState([])
+
+    const guardarPaciente = async (paciente)=> {
+        try {
+            const token = localStorage.getItem("token")
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            
+            const url = "http://localhost:4000/api/pacientes/"
+            const {data} = await axios.post(url, paciente, config)
+            const {createdAt, updateAt, __v, ...pacienteAlmacenado} = data
+
+            setPacientes([pacienteAlmacenado, paciente])
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return(
         <PacientesContext.Provider
         value={{
-            
+            pacientes,
+            guardarPaciente
         }}>
             {children}
         </PacientesContext.Provider>
