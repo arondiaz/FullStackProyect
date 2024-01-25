@@ -7,6 +7,32 @@ const PacientesProvider = ({children}) => {
 
     const [pacientes, setPacientes] = useState([])
 
+    useEffect(() => {
+
+        const obtenerPacientes = async () => {
+            try {
+                const token = localStorage.getItem("token")
+                if(!token) return
+                const config = {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+                const url = "http://localhost:4000/api/pacientes/"
+
+                const {data} = await axios.get(url, config)
+                
+
+                setPacientes(data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        return () => obtenerPacientes()
+    },[])
+
     const guardarPaciente = async (paciente)=> {
         try {
             const token = localStorage.getItem("token")
