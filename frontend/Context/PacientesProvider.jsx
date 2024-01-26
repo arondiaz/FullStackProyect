@@ -36,15 +36,26 @@ const PacientesProvider = ({children}) => {
     },[])
 
     const guardarPaciente = async (paciente)=> {
-        try {
-            const token = localStorage.getItem("token")
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                }
+        const token = localStorage.getItem("token")
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
             }
+        }
+        
+        if(paciente.id){
+            try {
+                const url = `http://localhost:4000/api/pacientes/${paciente.id}`
+                const {data} = await axios.put(url, paciente, config)
+                console.log(data);
+            } catch (error) {
+                console.log(error);
+            }
+        }else{
             
+        try {
+      
             const url = "http://localhost:4000/api/pacientes/"
             const {data} = await axios.post(url, paciente, config)
             const {createdAt, updateAt, __v, ...pacienteAlmacenado} = data
@@ -52,6 +63,7 @@ const PacientesProvider = ({children}) => {
             setPacientes([pacienteAlmacenado, paciente])
         } catch (error) {
             console.log(error);
+        }
         }
     }
 
