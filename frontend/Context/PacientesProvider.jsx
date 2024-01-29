@@ -75,13 +75,40 @@ const PacientesProvider = ({children}) => {
         setPaciente(paciente)
     }
 
+    const eliminarPaciente = async (id, paciente) => {
+        console.log(paciente);
+      const confirmar = confirm(`¿Estás seguro de que quieres eliminar el paciente ${paciente.nombre}?`);
+
+      if(confirmar){
+        try {
+
+            const token = localStorage.getItem("token")
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            };
+            const url = `http://localhost:4000/api/pacientes/${id}`
+            const {data} = await axios.delete(url, config);
+        
+            const pacientesActualizado = pacientes.filter(pacientesState => pacientesState._id !== id);
+
+            setPacientes(pacientesActualizado);
+        } catch (error) {
+            console.log(error);
+        }
+      }
+    }
+
     return(
         <PacientesContext.Provider
         value={{
             pacientes,
             guardarPaciente,
             setEdicion,
-            paciente
+            paciente,
+            eliminarPaciente
         }}>
             {children}
         </PacientesContext.Provider>
