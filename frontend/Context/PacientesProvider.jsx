@@ -43,12 +43,16 @@ const PacientesProvider = ({children}) => {
                 Authorization: `Bearer ${token}`
             }
         }
-        
+
+
         if(paciente.id){
             try {
                 const url = `http://localhost:4000/api/pacientes/${paciente.id}`
                 const {data} = await axios.put(url, paciente, config)
-                console.log(data);
+
+                const pacientesActualizado = pacientes.map(pacienteState => pacienteState._id === data._id ? data : pacienteState )
+          
+                setPacientes(pacientesActualizado)
             } catch (error) {
                 console.log(error);
             }
