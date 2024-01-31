@@ -12,7 +12,7 @@ const EditarPerfil = () => {
     setPerfil(auth);
   }, [auth]);
 
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const { nombre, email } = perfil;
@@ -25,7 +25,9 @@ const EditarPerfil = () => {
       return;
     }
 
-    actualizarPerfil();
+    const resultado = await actualizarPerfil(perfil);
+
+    setAlerta(resultado); 
   }
 
   const { msg } = alerta;
