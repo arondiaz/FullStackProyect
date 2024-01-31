@@ -30,7 +30,9 @@ const CambiarPassword = () => {
       return;
     }
 
-    guardarPassword(password);
+    const respuesta = await guardarPassword(password);
+
+    setAlerta(respuesta);
   };
 
   const { msg } = alerta;
