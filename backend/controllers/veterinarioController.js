@@ -170,6 +170,29 @@ const actualizarPerfil = async (req, res) => {
   }
 };
 
+const actualizarPassword = async (req, res) => {
+  console.log(req.veterinario);
+  console.log(req.body);
+
+  const { id } = req.veterinario;
+  const { newpass, oldpass } = req.body;
+
+  const veterinario = await Veterinario.findById(id);
+
+  if (!veterinario) {
+    const error = new Error("Hubo un error");
+    return res.status(400).json({ msg: error.message });
+  }
+
+  if (await veterinario.validatePassword(oldpass)) {
+    veterinario.password = newpass;
+    await veterinario.save();
+    res.json({msg: "Password modificada correctamente"})
+  } else {
+    const error = new Error("La contraseña actual es incorrecta");
+    return res.status(400).json({ msg: error.message });
+  }
+};
 export {
   registrar,
   perfil,
@@ -179,4 +202,5 @@ export {
   comprobarToken,
   nuevoPassword,
   actualizarPerfil,
+  actualizarPassword,
 };
