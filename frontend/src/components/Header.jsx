@@ -17,10 +17,10 @@ const Header = () => {
 
           <nav className="flex gap-4">
             <Link
-              to="/pacientes"
+              to="/admin"
               className="text-white text-md font-bold uppercase"
             >
-              Pacientes
+              Inicio
             </Link>
             <Link
               to="/admin/perfil"
