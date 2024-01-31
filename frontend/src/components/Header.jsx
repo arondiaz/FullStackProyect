@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import { useContext } from "react";
+import PacientesContext from "../../Context/PacientesProvider";
 
 const Header = () => {
-
-    const {cerrarSesion} = useAuth()
+  const { cerrarSesion } = useAuth();
+  const { setPacientes } = useContext(PacientesContext);
 
   return (
     <>
@@ -30,7 +32,10 @@ const Header = () => {
             <button
               type="button"
               className="text-white text-sm uppercase font-bold"
-              onClick={cerrarSesion}
+              onClick={() => {
+                cerrarSesion();
+                setPacientes([]);
+              }}
             >
               Cerrar Sesión
             </button>
