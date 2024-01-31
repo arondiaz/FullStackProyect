@@ -1,5 +1,5 @@
 import express from "express";
-import { registrar, perfil, confirmar, login, olvidePassword, comprobarToken, nuevoPassword } from "../controllers/veterinarioController.js";
+import { registrar, perfil, confirmar, login, olvidePassword, comprobarToken, nuevoPassword, actualizarPerfil } from "../controllers/veterinarioController.js";
 import checkAuth from "../middleware/authMiddleware.js";
 
 const routes = express.Router();
@@ -14,5 +14,6 @@ routes.post("/olvide-password/:token", nuevoPassword)
 
 //private
 routes.get("/perfil", checkAuth, perfil)
+routes.put("/perfil/:id", checkAuth, actualizarPerfil)
 
 export default routes;
