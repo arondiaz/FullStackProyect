@@ -5,9 +5,9 @@ import emailRegistro from "../helpers/emailRegistro.js";
 import emailOlvidePassword from "../helpers/emailOlvidePassword.js";
 
 const registrar = async (req, res) => {
-  const { nombre, email, contraseña } = req.body;
+  const { nombre, email, password } = req.body;
 
-  //Comprobar que el usuario ya está registrado
+  // Comprobar que el usuario ya está registrado
   const existeUsuario = await Veterinario.findOne({ email });
   if (existeUsuario) {
     const error = new Error("El usuario ya está registrado");
@@ -187,7 +187,7 @@ const actualizarPassword = async (req, res) => {
   if (await veterinario.validatePassword(oldpass)) {
     veterinario.password = newpass;
     await veterinario.save();
-    res.json({msg: "Password modificada correctamente"})
+    res.json({ msg: "Password modificada correctamente" });
   } else {
     const error = new Error("La contraseña actual es incorrecta");
     return res.status(400).json({ msg: error.message });

@@ -1,36 +1,18 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+
 import Alerta from "../components/Alerta";
 import axios from "axios";
+import useRegisterForm from "../custom-hooks/useRegisterForm";
 
 const Registrar = () => {
-  const [email, setEmail] = useState("");
-  const [nombre, setNombre] = useState("");
-  const [password, setPassword] = useState("");
-  const [repetirPassword, setRepetirPassword] = useState("");
-  const [alerta, setALerta] = useState({});
+  const {validateForm,nombre,setNombre,email,setEmail,password,setPassword,repetirPassword,setRepetirPassword,alerta,setALerta} = useRegisterForm();
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if ([email, nombre, password].includes("")) {
-      return setALerta({ msg: "Campos vacíos", error: true });
+    if (!validateForm()) {
+      return;
     }
-
-    if (password !== repetirPassword) {
-      return setALerta({ msg: "Las contraseñas no coinciden", error: true });
-    }
-
-    if (password.length <= 5) {
-      return setALerta({
-        msg: "La contraseña debe tener más de 5 caracteres",
-        error: true,
-      });
-    }
-
-    console.log("paso las validaciones");
-
-    setALerta({});
 
     try {
       const url = `${import.meta.env.VITE_BACKEND_URL}/api/veterinarios/`;
@@ -46,7 +28,7 @@ const Registrar = () => {
         error: true,
       });
     }
-  }
+  };
 
   const { msg } = alerta;
 
