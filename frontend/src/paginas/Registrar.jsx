@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
-
 import Alerta from "../components/Alerta";
-import axios from "axios";
 import useRegisterForm from "../custom-hooks/useRegisterForm";
+import useRegisterFetch from "../custom-hooks/useRegisterFetch";
 
 const Registrar = () => {
-  const {validateForm,nombre,setNombre,email,setEmail,password,setPassword,repetirPassword,setRepetirPassword,alerta,setALerta} = useRegisterForm();
+  const {validateForm,nombre,setNombre,email,setEmail,password,setPassword,repetirPassword,setRepetirPassword,alerta,setAlerta} = useRegisterForm();
+
+  const {registerFetch} = useRegisterFetch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,20 +15,7 @@ const Registrar = () => {
       return;
     }
 
-    try {
-      const url = `${import.meta.env.VITE_BACKEND_URL}/api/veterinarios/`;
-      await axios.post(url, { nombre, email, password });
-
-      setALerta({
-        msg: "Cuenta creada correctamete, abre tu email",
-        error: false,
-      });
-    } catch (error) {
-      setALerta({
-        msg: error.response.data.msg,
-        error: true,
-      });
-    }
+    await registerFetch(nombre, email, password, setAlerta);
   };
 
   const { msg } = alerta;

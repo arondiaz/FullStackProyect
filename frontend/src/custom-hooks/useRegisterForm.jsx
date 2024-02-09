@@ -5,21 +5,21 @@ const useRegisterForm = () => {
   const [nombre, setNombre] = useState("");
   const [password, setPassword] = useState("");
   const [repetirPassword, setRepetirPassword] = useState("");
-  const [alerta, setALerta] = useState({});
+  const [alerta, setAlerta] = useState({});
 
   const validateForm = () => {
     if ([email, nombre, password].includes("")) {
-      setALerta({ msg: "Campos vacíos", error: true });
+      setAlerta({ msg: "Campos vacíos", error: true });
       return false;
     }
 
     if (password !== repetirPassword) {
-      setALerta({ msg: "Las contraseñas no coinciden", error: true });
+      setAlerta({ msg: "Las contraseñas no coinciden", error: true });
       return false;
     }
 
     if (password.length <= 5) {
-      setALerta({
+      setAlerta({
         msg: "La contraseña debe tener más de 5 caracteres",
         error: true,
       });
@@ -29,7 +29,7 @@ const useRegisterForm = () => {
 
     console.log("paso las validaciones");
 
-    setALerta({});
+    setAlerta({});
     return true;
   };
   return {
@@ -42,7 +42,7 @@ const useRegisterForm = () => {
     repetirPassword,
     setRepetirPassword,
     alerta,
-    setALerta,
+    setAlerta,
     validateForm,
   };
 };
