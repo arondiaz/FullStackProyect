@@ -1,12 +1,17 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import Alerta from "../components/Alerta";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
-import useLoginForm from "../custom-hooks/useLoginForm";
+// import useLoginForm from "../custom-hooks/useLoginForm";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [alerta, setAlerta] = useState({});
+  const [mostrarAlerta, setMostrarAlerta] = useState(false);
 
-  const {email,setEmail,password,setPassword,alerta,setAlerta,mostrarAlerta,setMostrarAlerta,validation} = useLoginForm();
+  // const {email,setEmail,password,setPassword,alerta,setAlerta,mostrarAlerta,setMostrarAlerta,validation} = useLoginForm();
 
   const { setAuth } = useAuth();
   const navigate = useNavigate();
@@ -14,9 +19,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validation) {
-      return;
+    if ([email, password].includes("")) {
+      setMostrarAlerta(true);
+      return setAlerta({ msg: "Campos obligatorios", error: true });
     }
+    // if (!validation) {
+    //   return;
+    // }
 
     try {
       const url = `http://localhost:4000/api/veterinarios/login`;
